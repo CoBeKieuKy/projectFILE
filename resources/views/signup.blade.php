@@ -25,19 +25,22 @@
                 <a href="../home/about">ABOUT US</a>
                 <a href="../home/contact">CONTACT</a>
                 <a href="../home/signup">SIGN UP</a>
+                <a href="../home/login">LOG IN</a>
                 <div class="search-container">
-                    <form action="/action_page.php">
-                        <input type="text" placeholder="SEARCH..."/>
-                        <button type="submit">Find</button>
-                    </form>
+                        <form action="{{url('home/searchpage')}}" method="get">
+                            <input type="text" name="search" placeholder="SEARCH..."/>
+                            <button type="submit" name="searchpagebut" value="searchbut">Find</button>
+                        </form>
                 </div>
             </div>
         </div>
 
 
         <div class="col-xs-4 col-xs-offset-4">
+            <br>
+            @include('errors.503')
             <br><br>
-            <div class="panel panel-primary">
+            <div class="panel panel-danger">
                 <div class="panel-heading">
                     <h1>Sign Up</h1>
                 </div>
@@ -65,7 +68,7 @@
                         </div>
 
                         <div class="form-group">
-                            <input type="submit" class="btn btn-lg btn-primary btn-block" value="Create An Account">
+                            <input type="submit" class="btn btn-lg btn-danger btn-block" value="Create An Account">
                         </div>
                     </form>
                 </div>

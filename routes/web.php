@@ -6,24 +6,23 @@ use App\phim;
 
 /*****************LOGIN IN*******************************/
 
-Route::post('/home', function(Request $request){
+Route::post('home/login', function(Request $request){
     $validator = Validator::make($request->all(),[
         'username' => 'required|min:6',
         'password' => 'required|min:6',
     ]);
 
     if ($validator->fails()) {
-        return redirect('/home')
+        return redirect('home/login')
             ->withInput()
             ->withErrors($validator);
 
     }
     $nguoidungcu = nguoidung::where([['ten', '=', $request->username],['matkhau','=',$request->password]])->first();
     if ($nguoidungcu != null) {
-       // session(['user' => $request->username]);
-        return redirect('/home');
+        return redirect('home');
     } else {
-        return redirect('/home')
+        return redirect('home/login')
             ->withInput()
             ->withErrors(array('message' => 'Your username or password was wrong!!! Try again :|'));
     }
@@ -45,7 +44,7 @@ Route::post('home/signup', function(Request $request){
     ]);
 
     if ($validator->fails()) {
-        return redirect('/home')
+        return redirect('/home/signup')
             ->withInput()
             ->withErrors($validator);
     }
@@ -58,7 +57,7 @@ Route::post('home/signup', function(Request $request){
         $nguoidungmoi->vaitro = 0;
         $nguoidungmoi->save();
     } else {
-        return redirect('/home')
+        return redirect('/home/signup')
             ->withInput()
             ->withErrors(array('message' => 'This username are being used.! Try another one.'));
     }
@@ -68,7 +67,7 @@ Route::post('home/signup', function(Request $request){
 /*******************************************/
 
 Route::get('/home', function(){
-    return view('index');
+    return view('home');
 });
 
 Route::get('home/about', function(){
@@ -83,5 +82,8 @@ Route::get('home/signup', function(){
     return view('signup');
 });
 
-Route::get('index', 'searchFilm@search');
-Route::get('searchpage','searchFilm@search');
+Route::get('home/login', function(){
+    return view('login');
+});
+
+Route::get('home/searchpage','searchFilm@search');
