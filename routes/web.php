@@ -20,6 +20,10 @@ Route::post('home/login', function(Request $request){
     }
     $nguoidungcu = nguoidung::where([['ten', '=', $request->username],['matkhau','=',$request->password]])->first();
     if ($nguoidungcu != null) {
+
+        session(['uservalue'=> $nguoidungcu->msnd]);
+        session(['username'=>$nguoidungcu->ten]);
+
         return redirect('home');
     } else {
         return redirect('home/login')
@@ -28,12 +32,11 @@ Route::post('home/login', function(Request $request){
     }
 });
 
-/**********LOG OUT*****************
-Route::post('/home', function(Request $request){
-    session(['user' => null]);
-    return redirect('/home');
+/**********LOG OUT*********************************/
+Route::get('home/logout', function(){
+        session()->flush();
+        return redirect ('home');
 });
-*/
 
 /******************SIGN UP*************************/
 
@@ -56,6 +59,12 @@ Route::post('home/signup', function(Request $request){
         $nguoidungmoi->matkhau = $request->signup_password;
         $nguoidungmoi->vaitro = 0;
         $nguoidungmoi->save();
+        $nguoidungmoi= nguoidung::where([['ten', '=', $request->signup_username],['matkhau','=',$request->signup_password]])->first();
+
+        session(['uservalue'=> $nguoidungmoi->msnd]);
+        session(['username'=>$nguoidungmoi->ten]);
+        return redirect('home');
+
     } else {
         return redirect('/home/signup')
             ->withInput()
@@ -66,9 +75,9 @@ Route::post('home/signup', function(Request $request){
 
 /*******************************************/
 
-Route::get('/home', function(){
-    return view('home');
-});
+Route::get('home/list','seeList@see');
+
+Route::get('/home','showTrending@show');
 
 Route::get('home/about', function(){
     return view('about');

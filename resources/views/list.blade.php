@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equfv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Animelist</title>
+    <title>Anime Management alpha</title>
     <link href="http://localhost/project1.0/public/image/hust.png" rel="icon">
     <link href="http://localhost/project1.0/public/bootstrap3/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://localhost/project1.0/public/css/design.css" rel="stylesheet" type="text/css" >
@@ -60,69 +60,48 @@
             </nav>
         </div>
 
-            @if (count($posts) > 0)
+        @if (count($list) > 0)
+            @foreach($list as $LIST)
+                <div class="col-xs-3">
+                    <br><br><br><br>
+                    <img src="{{$LIST->poster}}" class="thumbnail" height="300px" width="200px">
+                </div>
+
+                <div class="col-xs-9">
+                    <br>
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h1>{{$LIST->tenphim}}</h1>
+                        </div>
+
+                        <div class="panel-body">
+                            <ul>
+                                <li><strong>Aired Date: {{$LIST->ngaycongchieu}}</strong></li>
+
+                                <li><strong>Producer: {{$LIST->nsx}}</strong></li>
+
+                                <li><strong>Episodes: {{$LIST->tap}} eps ({{$LIST->dodai}})</strong></li>
+
+                                <li><strong>Score: {{$LIST->diem}} (Rank: #{{$LIST->xephang}})</strong></li>
+
+                                <li><strong>Rating: {{$LIST->luuy}}</strong></li>
+
+                                <li><strong>Genres: {{$LIST->tag}}</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        @else
                 <div class="col-xs-12">
                     <br>
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <h1>We have found {{count($posts)}} films.</h1>
+                            <h1>You still hasn't had any films in your list yet! :|</h1>
                         </div>
                     </div>
                 </div>
-
-                @foreach($posts as $post)
-                    <div class="col-xs-3 col-xs-offset-2">
-                        <br><br><br>
-                        <img src="{{$post->poster}}" class="thumbnail" height="300px" width="200px">
-                    </div>
-                    <div class="col-xs-6">
-                        <br>
-                        <div class="panel panel-danger">
-                            <div class="panel-heading">
-                                <h1 class="centered">{{$post->tenphim}}</h1>
-                            </div>
-
-                            <div class="panel-body">
-                                <ul>
-                                    <li><strong>Aired Date: {{$post->ngaycongchieu}}</strong></li>
-                                    <br>
-                                    <li><strong>Producer: {{$post->nsx}}</strong></li>
-                                    <br>
-                                    <li><strong>Episodes: {{$post->tap}} eps ({{$post->dodai}})</strong></li>
-                                    <br>
-                                    <li><strong>Score: {{$post->diem}} (Rank: #{{$post->xephang}})</strong></li>
-                                    <br>
-                                    <li><strong>Rating: {{$post->luuy}}</strong></li>
-                                    <br>
-                                        <form action="{{url('home/searchpage')}}" method="get" class="form-horizontal">
-                                            <form action="/detail" method="get">
-                                                <?php $showvalue = 'showmorebut'.$post->msphim; ?>
-                                                <button type="submit" name="searchpagebut" value="<?php echo $showvalue; ?>" class="btn btn-primary">More details</button>
-                                            </form>
-                                        </form>
-                                </ul>
-                            </div>
-                            <div class="panel-footer">
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-                @else
-                <div class="col-xs-8 col-xs-offset-2">
-                    <br><br>
-                    <div class="panel panel-danger">
-                        <div class="panel-heading">
-                            <h1>
-                                Whoops!!! There is no film like that.
-                            </h1>
-                        </div>
-                        <div class="panel-body">
-                            <br>
-                            <img src="http://localhost/project1.0/public/image/sorry.gif" class="thumbnail" height="400px" width="720px">
-                        </div>
-                    </div>
-                </div>
-            @endif
+        @endif
     </div>
 </div>
 
