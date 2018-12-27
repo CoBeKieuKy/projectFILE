@@ -8,7 +8,7 @@
     <title>Anime Management alpha</title>
     <link href="http://localhost/project1.0/public/image/hust.png" rel="icon">
     <link href="http://localhost/project1.0/public/bootstrap3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="http://localhost/project1.0/public/css/design.css" rel="stylesheet" type="text/css" >
+    <link href="http://localhost/project1.0/public/css/design2.css" rel="stylesheet" type="text/css" >
 </head>
 
 <body>
@@ -96,22 +96,62 @@
 
                         <div class="panel-body">
                             <ul>
-                                <li><strong>Aired Date: {{$LIST->ngaycongchieu}}</strong></li>
+                                <li><strong><font color="white">Aired Date: {{$LIST->ngaycongchieu}}</font> </strong></li>
                                 <br>
-                                <li><strong>Producer: {{$LIST->nsx}}</strong></li>
+                                <li><strong><font color="white">Producer: {{$LIST->nsx}}</font></strong></li>
                                 <br>
-                                <li><strong>Episodes: {{$LIST->tap}} eps ({{$LIST->dodai}})</strong></li>
+                                <li><strong><font color="white">Episodes: {{$LIST->tap}} eps ({{$LIST->dodai}})</font></strong></li>
                                 <br>
-                                <li><strong>Genres: {{$LIST->tag}}</strong></li>
+                                <li><strong><font color="white">Genres: {{$LIST->tag}}</font></strong></li>
                                 <br>
-                                <li><strong>Score: {{$LIST->diem}} (Rank: #{{$LIST->xephang}})</strong></li>
-                                <br>
-                                <li><strong>Rating: {{$LIST->luuy}}</strong></li>
-                                <br>
+                                <li>
+                                    <form action="{{url('home/list')}}" method="get">
+                                        <a><font color="red">Status</font></a>
+                                        <select name="status">
+                                            <option value="0">
+                                                @if($LIST->trangthai==1)
+                                                    Current Status: Watching
+                                                @elseif($LIST->trangthai==2)
+                                                    Current Status: Completed
+                                                @elseif($LIST->trangthai==3)
+                                                    Current Status: On-Hold
+                                                @elseif($LIST->trangthai==4)
+                                                    Current Status: Dropped
+                                                @elseif($LIST->trangthai==5)
+                                                    Current Status: Plan to Watch
+                                                @else
+                                                    Default
+                                                @endif
+                                            </option>
+                                            <option value="1">Watching</option>
+                                            <option value="2">Completed</option>
+                                            <option value="3">On-Hold</option>
+                                            <option value="4">Dropped</option>
+                                            <option value="5">Plan to Watch</option>
+                                        </select>
+                                        &nbsp;
+                                        <a><font color="red">My Score</font></a>
+                                        <select name="score">
+                                            <option value="0">Current Score: {{$LIST->diemnguoidung}}</option>
+                                            <option value="10">(10) Masterpiece</option>
+                                            <option value="9">(9) Great</option>
+                                            <option value="8">(8) Very Good</option>
+                                            <option value="7">(7) Good</option>
+                                            <option value="6">(6) Fine</option>
+                                            <option value="5">(5) Average</option>
+                                            <option value="4">(4) Bad</option>
+                                            <option value="3">(3) Very Bad</option>
+                                            <option value="2">(2) Horrible</option>
+                                            <option value="1">(1) Appalling</option>
+                                        </select>
+                                        <br><br>
+                                        <?php $showvalue3 = 'submit'.$LIST->msphim; ?>
+                                        <button class="btn btn-primary" name="submitbut" value="<?php echo $showvalue3; ?>">Submit</button>
+                                    </form>
+                                </li>
                             </ul>
                         </div>
-                        <div class="panel-footer">
-                        </div>
+                        <div class="panel-footer"></div>
                     </div>
                 </div>
             @endforeach
