@@ -132,7 +132,31 @@
                                         &nbsp;
                                         <a><font color="red">My Score</font></a>
                                         <select name="score">
-                                            <option value="0">Current Score: {{$LIST->diemnguoidung}}</option>
+                                            <option value="0">
+                                                @if($LIST->diemnguoidung==0)
+                                                    Current Score: Not scored yet!
+                                                @elseif($LIST->diemnguoidung==1)
+                                                Current Score: {{$LIST->diemnguoidung}} (Appalling)
+                                                @elseif($LIST->diemnguoidung==2)
+                                                    Current Score: {{$LIST->diemnguoidung}} (Horrible)
+                                                @elseif($LIST->diemnguoidung==3)
+                                                    Current Score: {{$LIST->diemnguoidung}} (Very bad)
+                                                @elseif($LIST->diemnguoidung==4)
+                                                    Current Score: {{$LIST->diemnguoidung}} (Bad)
+                                                @elseif($LIST->diemnguoidung==5)
+                                                    Current Score: {{$LIST->diemnguoidung}} (Average)
+                                                @elseif($LIST->diemnguoidung==6)
+                                                    Current Score: {{$LIST->diemnguoidung}} (Fine)
+                                                @elseif($LIST->diemnguoidung==7)
+                                                    Current Score: {{$LIST->diemnguoidung}} (Good)
+                                                @elseif($LIST->diemnguoidung==8)
+                                                    Current Score: {{$LIST->diemnguoidung}} (Very good)
+                                                @elseif($LIST->diemnguoidung==9)
+                                                    Current Score: {{$LIST->diemnguoidung}} (Great)
+                                                @elseif($LIST->diemnguoidung==10)
+                                                    Current Score: {{$LIST->diemnguoidung}} (Masterpiece)
+                                                @endif
+                                            </option>
                                             <option value="10">(10) Masterpiece</option>
                                             <option value="9">(9) Great</option>
                                             <option value="8">(8) Very Good</option>
