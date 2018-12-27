@@ -8,8 +8,7 @@
     <title>Anime Management alpha</title>
     <link href="http://localhost/project1.0/public/image/hust.png" rel="icon">
     <link href="http://localhost/project1.0/public/bootstrap3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="http://localhost/project1.0/public/bootstrap3/css/bootstrap-theme.min.css" rel="stylesheet">
-    <link href="http://localhost/project1.0/public/css/design.css" rel="stylesheet" type="text/css">
+    <link href="http://localhost/project1.0/public/css/design.css" rel="stylesheet" type="text/css" >
 </head>
 
 <body>
@@ -72,40 +71,57 @@
             </nav>
         </div>
 
+        <div class="col-xs-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h1>Welcome Administrator {{session()->get('username')}}</h1>
+                </div>
+            </div>
+        </div>
 
-        <div class="col-xs-4">
-            <br>
-            <div class="panel panel-primary">
-                <img src="http://localhost/project1.0/public/image/thanh.jpg" class="img-thumbnail">
-                <div class="panel-heading"><h3 class="panel-title">Team Leader - Hoang Cong Thanh</h3></div>
-                <div class="panel-body"><p>+)  I'm the team leader of Anime Management Website Project and an amateur coder. I focus on designing front-end of this web and also create the database for it. Feel free to add me on facebook <a href="https://www.facebook.com/hoangcong.thanh.75098" target="_blank"> My Facebook here!</a></p>
-                    <p>+)  Some infomation about me:</p>
-                    <ul>
-                        <li>Gender: Male, 21 :P</li>
-                        <li>Job: Student at Hanoi University of Science and Technology, HEDSPI.</li>
-                        <li>Hobby: I love coding, watching anime and playing games (especially StarCraft II) in my free time on Steam and Battle.net.<br>
-                            I'll be so happy if you can join me and play together (<a href="https://steamcommunity.com/profiles/76561198177649689/" target="_blank">My Steam Account</a>). I also loves cooking and riding bike too (just like some kinds of resting after working)</li>
-                        <li>My favourite anime: <a href="https://myanimelist.net/anime/6547/Angel_Beats" target="_blank">Angel Beats</a>,<a href="https://myanimelist.net/anime/9253/Steins_Gate" target="_blank"> Steins;Gate</a>,<a href="https://myanimelist.net/anime/28851/Koe_no_Katachi" target="_"> Koe no Katachi</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-4">
-            <br>
-            <div class="panel panel-primary">
-                <img src="http://localhost/project1.0/public/image/quang.jpg" class="img-thumbnail">
-                <div class="panel-heading"><h3 class="panel-title">Team Co-Leader 1 - Tran Ba Quang</h3></div>
-                <div class="panel-body">blank
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-4">
-            <br>
-            <div class="panel panel-primary">
-                <img src="http://localhost/project1.0/public/image/phuong.jpg" class="img-thumbnail">
-                <div class="panel-heading"><h3 class="panel-title">Team Co-Leader 2 - Doan Duy Phuong</h3></div>
-                <div class="panel-body">blank
-                </div>
+        <div class="col-xs-12">
+            <div class="panel-body">
+                @include('errors.503')
+
+                <form action="{{url('home/managefilm')}}" method="get" class="form-horizontal">
+                            <div class="form-group">
+                                    <input type="search" name="searchfilm" class="form-control">
+                                    <span class="input-group-prepend">
+                                        <button type="submit" name="managefilmbut" value="searchfilmbut" class="btn btn-primary">Tim kiem</button>
+                                    </span>
+                            </div>
+                </form>
+                        <table style="width:100%">
+                            <tr>
+                                <th>Name</th>
+                                <th></th>
+                            </tr>
+                            @if ($films != null)
+                                @if (count($films) > 0)
+                                    @foreach($films as $film)
+                                        <tr>
+                                            <th>{{$film->tenphim}}</th>
+                                            <th>
+                                                <form action="{{url('home/managefilm')}}" method="get" class="form-horizontal">
+                                                    <?php $update = 'update'.$film->msphim; ?>
+                                                    <button type="submit" name="managefilmbut" value="<?php echo $update; ?>" class="btn btn-primary">Update</button>
+                                                </form>
+                                                <br>
+                                                <form method="get" action="{{url('home/managefilm')}}" class="form-horizontal">
+                                                    <?php $delete = 'delete'.$film->msphim; ?>
+                                                    <button type="submit" name="managefilmbut" value="<?php echo $delete;?>" class="btn btn-primary">Delete</button>
+                                                </form>
+                                            </th>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <th>There is no film like that!</th>
+                                    </tr>
+                                @endif
+                            @endif
+                        </table>
+                    </form>
             </div>
         </div>
     </div>

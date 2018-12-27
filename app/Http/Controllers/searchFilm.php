@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class searchFilm
 {
-    public function search(Request $request)
+    public function searchfilm(Request $request)
     {
         if(($request->searchpagebut) == 'searchbut') {
             $search = strtolower($request->search);
@@ -18,6 +18,16 @@ class searchFilm
             $showmore = (substr($request->searchpagebut, 11));
             $details = DB::table('phim')->where('msphim', '=', $showmore)->get();
             return view('detail', ['details' => $details]);
+        }
+        if((strpos(($request->addfilmbut),'addbut')) !== false){
+            $check = 1;
+            $showmore2 = (substr($request->addfilmbut, 6));
+            $phimcu= DB::table('danhsach')->where([['msphim','=',$showmore2],['msnd','=',session()->get('uservalue')]])->get();
+            if(count($phimcu)==0){
+                DB::table('danhsach')->insert(['msnd'=>session()->get('uservalue'),'msphim' => $showmore2]);
+                return view('info',['info'=>$phimcu],['check'=>$check]);
+            }
+            return view('info',['info'=> $phimcu],['check'=>$check]);
         }
     }
 }

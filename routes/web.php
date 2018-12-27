@@ -23,6 +23,7 @@ Route::post('home/login', function(Request $request){
 
         session(['uservalue'=> $nguoidungcu->msnd]);
         session(['username'=>$nguoidungcu->ten]);
+        session(['userright'=>$nguoidungcu->vaitro]);
 
         return redirect('home');
     } else {
@@ -95,4 +96,16 @@ Route::get('home/login', function(){
     return view('login');
 });
 
-Route::get('home/searchpage','searchFilm@search');
+Route::get('home/searchpage','searchFilm@searchfilm');
+
+Route::get('home/manageuser','searchUser@searchuser');
+
+Route::get('home/managefilm','searchFilm2@searchfilm2');
+
+Route::get('home/manage','manageController@manage');
+
+Route::get('home/updatefilm','updateFilm@updatefilm');
+
+
+
+

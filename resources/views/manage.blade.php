@@ -8,8 +8,7 @@
     <title>Anime Management alpha</title>
     <link href="http://localhost/project1.0/public/image/hust.png" rel="icon">
     <link href="http://localhost/project1.0/public/bootstrap3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="http://localhost/project1.0/public/bootstrap3/css/bootstrap-theme.min.css" rel="stylesheet">
-    <link href="http://localhost/project1.0/public/css/design.css" rel="stylesheet" type="text/css">
+    <link href="http://localhost/project1.0/public/css/design.css" rel="stylesheet" type="text/css" >
 </head>
 
 <body>
@@ -72,42 +71,36 @@
             </nav>
         </div>
 
+        @if( $warn == 1)
+            <div class="col-xs-12">
+                <br>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h1>You have no rights to manage data!!! ><</h1>
+                    </div>
+                </div>
+            </div>
 
-        <div class="col-xs-4">
-            <br>
+        @else
+        <div class="col-xs-12">
             <div class="panel panel-primary">
-                <img src="http://localhost/project1.0/public/image/thanh.jpg" class="img-thumbnail">
-                <div class="panel-heading"><h3 class="panel-title">Team Leader - Hoang Cong Thanh</h3></div>
-                <div class="panel-body"><p>+)  I'm the team leader of Anime Management Website Project and an amateur coder. I focus on designing front-end of this web and also create the database for it. Feel free to add me on facebook <a href="https://www.facebook.com/hoangcong.thanh.75098" target="_blank"> My Facebook here!</a></p>
-                    <p>+)  Some infomation about me:</p>
-                    <ul>
-                        <li>Gender: Male, 21 :P</li>
-                        <li>Job: Student at Hanoi University of Science and Technology, HEDSPI.</li>
-                        <li>Hobby: I love coding, watching anime and playing games (especially StarCraft II) in my free time on Steam and Battle.net.<br>
-                            I'll be so happy if you can join me and play together (<a href="https://steamcommunity.com/profiles/76561198177649689/" target="_blank">My Steam Account</a>). I also loves cooking and riding bike too (just like some kinds of resting after working)</li>
-                        <li>My favourite anime: <a href="https://myanimelist.net/anime/6547/Angel_Beats" target="_blank">Angel Beats</a>,<a href="https://myanimelist.net/anime/9253/Steins_Gate" target="_blank"> Steins;Gate</a>,<a href="https://myanimelist.net/anime/28851/Koe_no_Katachi" target="_"> Koe no Katachi</a></li>
-                    </ul>
+                <div class="panel-heading">
+                    <h1>Welcome Admin {{session()->get('username')}}</h1>
+                </div>
+
+                <div class="panel-body">
+                    <form action="{{'manage'}}" method="get">
+                        <button type="submit" name="managebut" value="user" class="btn btn-default">
+                            <i class="fa fa-plus">User Management</i>
+                        </button>
+                        <button type="submit" name="managebut" value="film" class="btn btn-default">
+                            <i class="fa fa-plus">Film Management</i>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
-        <div class="col-xs-4">
-            <br>
-            <div class="panel panel-primary">
-                <img src="http://localhost/project1.0/public/image/quang.jpg" class="img-thumbnail">
-                <div class="panel-heading"><h3 class="panel-title">Team Co-Leader 1 - Tran Ba Quang</h3></div>
-                <div class="panel-body">blank
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-4">
-            <br>
-            <div class="panel panel-primary">
-                <img src="http://localhost/project1.0/public/image/phuong.jpg" class="img-thumbnail">
-                <div class="panel-heading"><h3 class="panel-title">Team Co-Leader 2 - Doan Duy Phuong</h3></div>
-                <div class="panel-body">blank
-                </div>
-            </div>
-        </div>
+        @endif
     </div>
 </div>
 

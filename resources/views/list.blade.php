@@ -42,13 +42,24 @@
                         @if(session()->exists('uservalue'))
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Welcome {{session()->get('username')}}<span class="caret"></span>
+                                    Welcome {{session()->get('username')}}&nbsp<span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="../home/list"><span class="glyphicon glyphicon-th-list"></span>&nbsp FILM LIST</a></li>
-                                    <div class="dropdown-divider">
-                                        <li><a class="dropdown-item" href="../home/logout">&nbsp &nbsp &nbsp<span class="glyphicon glyphicon-log-out"></span>&nbsp LOG OUT</a></li>
-                                    </div>
+                                    @if(session()->get('userright') == 1)
+                                        <li>
+                                            <a class="dropdown-item" href="../home/manage">
+                                                <span class="glyphicon glyphicon-cog"></span>&nbsp ADMIN MANAGEMENT
+                                            </a>
+                                        </li>
+                                    @endif
+                                    <li>
+                                        <font color="blue">
+                                            <a class="dropdown-item" href="../home/logout">
+                                                &nbsp &nbsp &nbsp<span class="glyphicon glyphicon-log-out"></span>&nbsp LOG OUT
+                                            </a>
+                                        </font>
+                                    </li>
                                 </ul>
                             </li>
                         @else
@@ -61,15 +72,24 @@
         </div>
 
         @if (count($list) > 0)
+
+            <div class="col-xs-12">
+                <br>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h1>YOUR FILM LIST</h1>
+                    </div>
+                </div>
+            </div>
+
             @foreach($list as $LIST)
                 <div class="col-xs-3">
-                    <br><br><br><br>
+                    <br><br><br>
                     <img src="{{$LIST->poster}}" class="thumbnail" height="300px" width="200px">
                 </div>
-
                 <div class="col-xs-9">
                     <br>
-                    <div class="panel panel-primary">
+                    <div class="panel panel-danger">
                         <div class="panel-heading">
                             <h1>{{$LIST->tenphim}}</h1>
                         </div>
@@ -77,17 +97,20 @@
                         <div class="panel-body">
                             <ul>
                                 <li><strong>Aired Date: {{$LIST->ngaycongchieu}}</strong></li>
-
+                                <br>
                                 <li><strong>Producer: {{$LIST->nsx}}</strong></li>
-
+                                <br>
                                 <li><strong>Episodes: {{$LIST->tap}} eps ({{$LIST->dodai}})</strong></li>
-
-                                <li><strong>Score: {{$LIST->diem}} (Rank: #{{$LIST->xephang}})</strong></li>
-
-                                <li><strong>Rating: {{$LIST->luuy}}</strong></li>
-
+                                <br>
                                 <li><strong>Genres: {{$LIST->tag}}</strong></li>
+                                <br>
+                                <li><strong>Score: {{$LIST->diem}} (Rank: #{{$LIST->xephang}})</strong></li>
+                                <br>
+                                <li><strong>Rating: {{$LIST->luuy}}</strong></li>
+                                <br>
                             </ul>
+                        </div>
+                        <div class="panel-footer">
                         </div>
                     </div>
                 </div>

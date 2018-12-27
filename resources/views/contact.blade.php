@@ -42,13 +42,24 @@
                         @if(session()->exists('uservalue'))
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Welcome {{session()->get('username')}}<span class="caret"></span>
+                                    Welcome {{session()->get('username')}}&nbsp<span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="../home/list"><span class="glyphicon glyphicon-th-list"></span>&nbsp FILM LIST</a></li>
-                                    <div class="dropdown-divider">
-                                        <li><a class="dropdown-item" href="../home/logout">&nbsp &nbsp &nbsp<span class="glyphicon glyphicon-log-out"></span>&nbsp LOG OUT</a></li>
-                                    </div>
+                                    @if(session()->get('userright') == 1)
+                                        <li>
+                                            <a class="dropdown-item" href="../home/manage">
+                                                <span class="glyphicon glyphicon-cog"></span>&nbsp ADMIN MANAGEMENT
+                                            </a>
+                                        </li>
+                                    @endif
+                                    <li>
+                                        <font color="blue">
+                                            <a class="dropdown-item" href="../home/logout">
+                                                &nbsp &nbsp &nbsp<span class="glyphicon glyphicon-log-out"></span>&nbsp LOG OUT
+                                            </a>
+                                        </font>
+                                    </li>
                                 </ul>
                             </li>
                         @else

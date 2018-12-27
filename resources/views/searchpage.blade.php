@@ -42,13 +42,24 @@
                         @if(session()->exists('uservalue'))
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Welcome {{session()->get('username')}}<span class="caret"></span>
+                                    Welcome {{session()->get('username')}}&nbsp<span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="../home/list"><span class="glyphicon glyphicon-th-list"></span>&nbsp FILM LIST</a></li>
-                                    <div class="dropdown-divider">
-                                        <li><a class="dropdown-item" href="../home/logout">&nbsp &nbsp &nbsp<span class="glyphicon glyphicon-log-out"></span>&nbsp LOG OUT</a></li>
-                                    </div>
+                                    @if(session()->get('userright') == 1)
+                                        <li>
+                                            <a class="dropdown-item" href="../home/manage">
+                                                <span class="glyphicon glyphicon-cog"></span>&nbsp ADMIN MANAGEMENT
+                                            </a>
+                                        </li>
+                                    @endif
+                                    <li>
+                                        <font color="blue">
+                                            <a class="dropdown-item" href="../home/logout">
+                                                &nbsp &nbsp &nbsp<span class="glyphicon glyphicon-log-out"></span>&nbsp LOG OUT
+                                            </a>
+                                        </font>
+                                    </li>
                                 </ul>
                             </li>
                         @else
@@ -72,14 +83,14 @@
 
                 @foreach($posts as $post)
                     <div class="col-xs-3 col-xs-offset-2">
-                        <br><br><br>
+                        <br><br><br><br><br>
                         <img src="{{$post->poster}}" class="thumbnail" height="300px" width="200px">
                     </div>
                     <div class="col-xs-6">
                         <br>
                         <div class="panel panel-danger">
                             <div class="panel-heading">
-                                <h1 class="centered">{{$post->tenphim}}</h1>
+                                <h1>{{$post->tenphim}}</h1>
                             </div>
 
                             <div class="panel-body">
@@ -90,16 +101,41 @@
                                     <br>
                                     <li><strong>Episodes: {{$post->tap}} eps ({{$post->dodai}})</strong></li>
                                     <br>
+                                    <li><strong>Genres: {{$post->tag}}</strong></li>
+                                    <br>
                                     <li><strong>Score: {{$post->diem}} (Rank: #{{$post->xephang}})</strong></li>
                                     <br>
                                     <li><strong>Rating: {{$post->luuy}}</strong></li>
                                     <br>
-                                        <form action="{{url('home/searchpage')}}" method="get" class="form-horizontal">
-                                            <form action="/detail" method="get">
-                                                <?php $showvalue = 'showmorebut'.$post->msphim; ?>
-                                                <button type="submit" name="searchpagebut" value="<?php echo $showvalue; ?>" class="btn btn-primary">More details</button>
-                                            </form>
-                                        </form>
+                                    <li class="dropdown">
+                                        <button href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="button">
+                                             More &nbsp<span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a class="dropdown-item">
+                                                <form action="{{url('home/searchpage')}}" method="get">
+                                                    <?php $showvalue = 'showmorebut'.$post->msphim; ?>
+                                                    <button type="submit" name="searchpagebut" value="<?php echo $showvalue; ?>" class="btn btn-primary">
+                                                        <span class="glyphicon glyphicon-info-sign"></span>&nbsp More details
+                                                    </button>
+                                                </form>
+                                                </a>
+                                            </li>
+                                            @if(session()->exists('uservalue'))
+                                                <li>
+                                                    <a class="dropdown-item">
+                                                        <form method="get" action="{{url('home/searchpage')}}">
+                                                            <?php $showvalue2 = 'addbut'.$post->msphim; ?>
+                                                            <button type="submit" name="addfilmbut" value="<?php echo $showvalue2; ?>" class="btn btn-primary">
+                                                                <span class="glyphicon glyphicon-plus"></span>&nbsp Add to My List
+                                                            </button>
+                                                        </form>
+                                                    </a>
+                                                </li>
+                                            @endif
+                                        </ul>
+                                    </li>
                                 </ul>
                             </div>
                             <div class="panel-footer">
