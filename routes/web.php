@@ -106,6 +106,8 @@ Route::get('home/manage','manageController@manage');
 
 Route::get('home/updatefilm','updateFilm@updatefilm');
 
+Route::post('home/detail','searchFilm@searchfilm');
+
 
 
 

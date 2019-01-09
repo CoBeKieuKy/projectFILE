@@ -8,12 +8,13 @@
     <title>Anime Management alpha</title>
     <link href="http://localhost/project1.0/public/image/hust.png" rel="icon">
     <link href="http://localhost/project1.0/public/bootstrap3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="http://localhost/project1.0/public/css/design.css" rel="stylesheet" type="text/css" >
+    <link href="http://localhost/project1.0/public/css/design3.css" rel="stylesheet" type="text/css" >
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 </head>
 
 <body>
 <div class="container">
-    <div class="row">
+    < class="row">
         <div class="col-xs-12">
             <header><img src="http://localhost/project1.0/public/image/myanimelist-logo.jpg" height="400px"></header>
         </div>
@@ -23,7 +24,11 @@
             <nav class="navbar navbar-inverse">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="../home">YOUR ANIMELIST</a>
+                        @if(session()->exists('uservalue'))
+                        <a class="navbar-brand glow" href="../home">YOUR ANIMELIST</a>
+                        @else
+                            <a class="navbar-brand" href="../home">YOUR ANIMELIST</a>
+                        @endif
                     </div>
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="../home"><span class="glyphicon glyphicon-home"></span>&nbsp HOME PAGE</a></li>
@@ -42,7 +47,7 @@
                         @if(session()->exists('uservalue'))
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Welcome {{session()->get('username')}}&nbsp<span class="caret"></span>
+                                    Welcome <font color="green">{{session()->get('username')}}</font> &nbsp<span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="../home/list"><span class="glyphicon glyphicon-th-list"></span>&nbsp FILM LIST</a></li>
@@ -79,53 +84,75 @@
             </div>
         </div>
 
-        <div class="col-xs-12">
+        <div class="col-xs-6 col-xs-offset-3">
             <div class="panel-body">
                 @include ('errors.503')
-
                 <form action="{{url('home/manageuser')}}" method="get" class="form-horizontal">
-                    <div class="form-group">
-                        <input type="search" name="searchuser" class="form-control">
-                        <span class="input-group-prepend">
-                        <button type="submit" name="manageuserpagebut" value="searchuserbut" class="btn btn-primary">Tim kiem</button>
-                    </span>
+                    <div class="input-group">
+                        <input type="search" name="searchuser" class="form-control" placeholder="Search user...">
+                        <div class="input-group-btn">
+                        <button type="submit" name="manageuserpagebut" value="searchuserbut" class="btn btn-success">
+                            <span class="glyphicon glyphicon-search"></span>&nbsp;
+                            Search
+                        </button>
+                        </div>
                     </div>
-                    <table style="width:100%">
-                        <tr>
-                            <th>MSND</th>
-                            <th>Ten</th>
-                            <th>Vai tro</th>
-                            <th></th>
-                        </tr>
-                        @if ($users != null)
-                            @if (count($users) > 0)
-                                @foreach($users as $user)
-                                    <tr>
-                                        <th>{{$user->msnd}}</th>
-                                        <th>{{$user->ten}}</th>
-                                        <th>
-                                            @if($user->vaitro == 0)
-                                                Nguoi dung
-                                            @else
-                                                Quan tri
-                                            @endif
-                                        </th>
-                                        <th>
-                                            @if ($user->vaitro == 0)
-                                                <?php $ban = 'ban'.$user->msnd; ?>
-                                                <form action="{{url('manageuser')}}" method="get">
-                                                    <button type="submit" name="manageuserpagebut" value="<?php echo $ban; ?>" class="btn btn-primary">Ban</button>
-                                                </form>
-                                            @endif
-                                        </th>
-                                    </tr>
-                                @endforeach
-                            @endif
-                        @endif
-                    </table>
                 </form>
             </div>
         </div>
+
+        <div class="col-xs-12">
+            <br><br>
+            <div class="panel-footer">
+                <table class="table table-bordered table-dark">
+                    <thead>
+                    <tr class="table-primary">
+                        <th>UserID</th>
+                        <th>Name</th>
+                        <th>Right</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    @if ($users != null)
+                        @if (count($users) > 0)
+                            @foreach($users as $user)
+                                <tr>
+                                    <td>{{$user->msnd}}</td>
+                                    <td>{{$user->ten}}</td>
+                                    <td>
+                                        @if($user->vaitro == 0)
+                                            User
+                                        @else
+                                            Admin
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($user->vaitro == 0)
+                                            <?php $ban = 'ban'.$user->msnd; ?>
+                                            <form action="{{url('home/manageuser')}}" method="get">
+                                                <button type="submit" name="manageuserpagebut" value="<?php echo $ban; ?>" class="btn btn-primary">
+                                                    <span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;Delete
+                                                </button>
+                                            </form>
+                                            @else
+                                            <p>Admin a.k.a GOD can not be delete</p>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr class="">
+                                <td colspan="4">Waring: There is no user like that!</th>
+                            </tr>
+                        @endif
+                    @endif
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
 </div>
 

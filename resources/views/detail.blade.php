@@ -8,7 +8,7 @@
     <title>Anime Management alpha</title>
     <link href="http://localhost/project1.0/public/image/hust.png" rel="icon">
     <link href="http://localhost/project1.0/public/bootstrap3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="http://localhost/project1.0/public/css/design.css" rel="stylesheet" type="text/css" >
+    <link href="http://localhost/project1.0/public/css/design1.css" rel="stylesheet" type="text/css" >
 </head>
 
 <body>
@@ -23,8 +23,11 @@
             <nav class="navbar navbar-inverse">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="../home">YOUR ANIMELIST</a>
-                    </div>
+                        @if(session()->exists('uservalue'))
+                            <a class="navbar-brand glow" href="../home">YOUR ANIMELIST</a>
+                        @else
+                            <a class="navbar-brand" href="../home">YOUR ANIMELIST</a>
+                        @endif                      </div>
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="../home"><span class="glyphicon glyphicon-home"></span>&nbsp HOME PAGE</a></li>
                         <li><a href="../home/about">ABOUT US</a></li>
@@ -42,7 +45,7 @@
                         @if(session()->exists('uservalue'))
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Welcome {{session()->get('username')}}&nbsp<span class="caret"></span>
+                                    Welcome <font color="green">{{session()->get('username')}}</font>&nbsp<span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="../home/list"><span class="glyphicon glyphicon-th-list"></span>&nbsp FILM LIST</a></li>
@@ -73,6 +76,7 @@
 
             @if (count($details) > 0)
                 @foreach($details as $detail)
+                    @endforeach
                     <div class="col-xs-3">
                         <br><br><br><br>
                         <img src="{{$detail->poster}}" class="thumbnail" height="300px" width="200px">
@@ -97,14 +101,35 @@
                                     <li><strong>Rating: {{$detail->luuy}}</strong></li>
 
                                     <li><strong>Genres: {{$detail->tag}}</strong></li>
+
                                 </ul>
                             </div>
                             <div class="panel-footer">
                                 <h2><font color="red">Synopsis</font></h2>
                                 <p></p><strong><font color="black">{{$detail->noidung}}</font></strong></div>
                             </div>
+                            <div class="panel-footer">
+                                <h2><font color="blue">Comment</font></h2>
+                                <p>---------------------------------------</p>
+                                @foreach($details as $detail)
+                                     <p><strong><font color="blue">{{$detail->ten}}</font></strong></p>
+                                     <p><font color="black">{{$detail->nhanxet}} <font color="#808080">(Comment date: {{$detail->ngaynx}})</font></font></p>
+                                @endforeach
+                            </div>
+                        @if(session()->exists('uservalue'))
+                            <form action="{{url('home/searchpage')}}" method="get">
+                                <div class="panel-body">
+                                    <div class="form-group purple-border">
+                                        <textarea class="form-control" type="text" name="comment" rows="6" placeholder="Write something...about this film"></textarea>
+                                    </div>
+                                    <button type="submit" name="addcommentbut" value="addcomment" class="btn btn-primary">
+                                        <span class="glyphicon glyphicon-check"></span>&nbsp;
+                                        Submit your comment
+                                    </button>
+                                </div>
+                            </form>
+                            @endif
                         </div>
-                @endforeach
             @endif
     </div>
 </div>

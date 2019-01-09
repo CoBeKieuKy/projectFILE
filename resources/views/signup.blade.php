@@ -8,7 +8,7 @@
     <title>Anime Management alpha</title>
     <link href="http://localhost/project1.0/public/image/hust.png" rel="icon">
     <link href="http://localhost/project1.0/public/bootstrap3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="http://localhost/project1.0/public/css/design.css" rel="stylesheet" type="text/css" >
+    <link href="http://localhost/project1.0/public/css/design1.css" rel="stylesheet" type="text/css" >
 
 
 </head>

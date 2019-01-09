@@ -23,8 +23,11 @@
             <nav class="navbar navbar-inverse">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="../home">YOUR ANIMELIST</a>
-                    </div>
+                        @if(session()->exists('uservalue'))
+                            <a class="navbar-brand glow" href="../home">YOUR ANIMELIST</a>
+                        @else
+                            <a class="navbar-brand" href="../home">YOUR ANIMELIST</a>
+                        @endif                    </div>
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="../home"><span class="glyphicon glyphicon-home"></span>&nbsp HOME PAGE</a></li>
                         <li><a href="../home/about">ABOUT US</a></li>
@@ -42,7 +45,7 @@
                         @if(session()->exists('uservalue'))
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Welcome {{session()->get('username')}}&nbsp<span class="caret"></span>
+                                    Welcome <font color="green">{{session()->get('username')}}</font>&nbsp<span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="../home/list"><span class="glyphicon glyphicon-th-list"></span>&nbsp FILM LIST</a></li>

@@ -8,7 +8,7 @@
     <title>Anime Management alpha</title>
     <link href="http://localhost/project1.0/public/image/hust.png" rel="icon">
     <link href="http://localhost/project1.0/public/bootstrap3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="http://localhost/project1.0/public/css/design.css" rel="stylesheet" type="text/css" >
+    <link href="http://localhost/project1.0/public/css/design1.css" rel="stylesheet" type="text/css" >
 </head>
 
 <body>
@@ -23,8 +23,11 @@
             <nav class="navbar navbar-inverse">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="home">YOUR ANIMELIST</a>
-                    </div>
+                        @if(session()->exists('uservalue'))
+                            <a class="navbar-brand glow" href="../home">YOUR ANIMELIST</a>
+                        @else
+                            <a class="navbar-brand" href="../home">YOUR ANIMELIST</a>
+                        @endif                      </div>
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="home"><span class="glyphicon glyphicon-home"></span>&nbsp HOME PAGE</a></li>
                         <li><a href="home/about">ABOUT US</a></li>
@@ -42,7 +45,7 @@
                         @if(session()->exists('uservalue'))
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Welcome {{session()->get('username')}}&nbsp<span class="caret"></span>
+                                    Welcome <font color="green">{{session()->get('username')}}</font> &nbsp<span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="home/list"><span class="glyphicon glyphicon-th-list"></span>&nbsp FILM LIST</a></li>
@@ -79,7 +82,7 @@
                     <h1 class="centered">OUR TOP ANIME LIST</h1>
                 </div>
             </div>
-
+            <div class="panel">
             <table class="table table-bordered table-black">
                 <thead>
                     <tr class="bg-primary">
@@ -97,11 +100,11 @@
                     @foreach($trends as $trend)
                     <tr class="">
                         <th class="bg-info" scope="row"><font color="red">{{$trend->xephang}}</font></th>
-                        <td><img src="{{$trend->poster}}" class="thumbnail" height="180px" width="150px"></td>
-                        <td><font color="red" size="4">{{$trend->tenphim}}</font></td>
-                        <td><font color="red" size="4">{{$trend->nsx}}</font></td>
-                        <td><font color="red" size="4">{{$trend->ngaycongchieu}}</font></td>
-                        <td><font color="red" size="4">{{$trend->diem}}</font></td>
+                        <td><img src="{{$trend->poster}}" class="thumbnail" height="200px" width="150px"></td>
+                        <td><font color="white" size="4">{{$trend->tenphim}}</font></td>
+                        <td><font color="white" size="4">{{$trend->nsx}}</font></td>
+                        <td><font color="white" size="4">{{$trend->ngaycongchieu}}</font></td>
+                        <td><font color="white" size="4">{{$trend->diem}}</font></td>
                         <td>
                             <form action="{{url('home/searchpage')}}" method="get" class="form-horizontal">
                                 <form action="/detail" method="get">
@@ -114,6 +117,7 @@
                     @endforeach
                 </tbody>
             </table>
+            </div>
         </div>
     </div>
 </div>

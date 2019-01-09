@@ -8,7 +8,7 @@
     <title>Anime Management alpha</title>
     <link href="http://localhost/project1.0/public/image/hust.png" rel="icon">
     <link href="http://localhost/project1.0/public/bootstrap3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="http://localhost/project1.0/public/css/design.css" rel="stylesheet" type="text/css" >
+    <link href="http://localhost/project1.0/public/css/design3.css" rel="stylesheet" type="text/css" >
 </head>
 
 <body>
@@ -23,8 +23,11 @@
             <nav class="navbar navbar-inverse">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="../home">YOUR ANIMELIST</a>
-                    </div>
+                        @if(session()->exists('uservalue'))
+                            <a class="navbar-brand glow" href="../home">YOUR ANIMELIST</a>
+                        @else
+                            <a class="navbar-brand" href="../home">YOUR ANIMELIST</a>
+                        @endif                    </div>
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="../home"><span class="glyphicon glyphicon-home"></span>&nbsp HOME PAGE</a></li>
                         <li><a href="../home/about">ABOUT US</a></li>
@@ -42,7 +45,7 @@
                         @if(session()->exists('uservalue'))
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Welcome {{session()->get('username')}}&nbsp<span class="caret"></span>
+                                    Welcome <font color="green">{{session()->get('username')}}</font>&nbsp<span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="../home/list"><span class="glyphicon glyphicon-th-list"></span>&nbsp FILM LIST</a></li>
@@ -70,35 +73,66 @@
                 </div>
             </nav>
         </div>
-        <div class="col-xs-12">
-                <div class="panel-body">
-                    <form action="{{url('home/updatefilm')}}" method="get">
-                        <div class="form-group">
-                            @foreach ($details as $detail)
-                                {{'Name'}}<input type="text" name="name" value="<?php echo $detail->tenphim; ?>" class="form-control">
-                                <br>
-                                {{'Poster url'}}<input type="text" name="poster" value="<?php echo $detail->poster; ?>" class="form-control">
-                                <br>
-                                {{'Summary'}}<input type="text" name="sum" value="<?php echo $detail->noidung; ?>" class="form-control">
-                                <br>
-                                {{'Genres'}}<input type="text" name="gen" value="<?php echo $detail->tag; ?>" class="form-control">
-                                <br>
-                                {{'Length'}}<input type="text" name="len" value="<?php echo $detail->dodai; ?>" class="form-control">
-                                <br>
-                                {{'Episodes'}}<input type="text" name="eps" value="<?php echo $detail->tap; ?>" class="form-control">
-                                <br>
-                                {{'Release Date'}}<input type="text" name="rel" value="<?php echo $detail->ngaycongchieu; ?>" class="form-control">
-                                <br>
-                                {{'Producer'}}<input type="text" name="prd" value="<?php echo $detail->nsx; ?>" class="form-control">
-                                <br>
-                                {{'Rating'}}<input type="text" name="rat" value="<?php echo $detail->luuy; ?>" class="form-control">
-                                <br>
-                                <button type="submit" name="updatefilmbut" value="<?php echo $detail->msphim ?>" class="btn btn-primary">Update</button>
-                            @endforeach
-                        </div>
-                    </form>
+
+
+        <form action="{{url('home/updatefilm')}}" method="get">
+        @foreach($details as $detail)
+                <div class="col-xs-3">
+                    <br><br><br><br>
+                    <img src="{{$detail->poster}}" class="thumbnail" height="300px" width="200px">
                 </div>
-        </div>
+                <div class="col-xs-6">
+                    <br>
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h1><font color="red">Name</font> </h1>
+                            <input type="text" name="name" value="<?php echo $detail->tenphim; ?>" class="form-control">
+                        </div>
+
+                        <div class="panel-heading">
+                            <ul>
+                                <li>
+                                    {{'Release Date'}}<input type="text" name="rel" value="<?php echo $detail->ngaycongchieu; ?>" class="form-control">
+                                </li>
+                                <br>
+                                <li>
+                                    {{'Producer'}}<input type="text" name="prd" value="<?php echo $detail->nsx; ?>" class="form-control">
+                                </li>
+                                <br>
+                                <li>
+                                    {{'Poster URL'}}<input type="text" name="poster" value="<?php echo $detail->poster; ?>" class="form-control">
+                                </li>
+                                <br>
+                                <li>
+                                    {{'Episodes'}}<input type="text" name="eps" value="<?php echo $detail->tap; ?>" class="form-control">
+                                </li>
+                                <br>
+                                <li>
+                                    {{'Duration'}}<input type="text" name="len" value="<?php echo $detail->dodai; ?>" class="form-control">
+                                </li>
+                                <br>
+                                <li>
+                                    {{'Genres'}}<input type="text" name="gen" value="<?php echo $detail->tag; ?>" class="form-control">
+                                </li>
+                                <br>
+                                <li>
+                                    {{'Rating'}}<input type="text" name="rat" value="<?php echo $detail->luuy; ?>" class="form-control">
+                                </li>
+                                <br>
+                            </ul>
+                        </div>
+
+                        <div class="panel-footer">
+                            <h2><font color="red">Synopsis</font></h2>
+                            <div class="form-group purple-border">
+                                <textarea class="form-control" type="text" name="sum" rows="6"><?php echo $detail->noidung; ?></textarea>
+                            </div>
+                            <button type="submit" name="updatefilmbut" value="<?php echo $detail->msphim ?>" class="btn btn-primary"><span class="glyphicon glyphicon-check"></span>&nbsp;Update</button>
+                        </div>
+                    </div>
+                </div>
+        @endforeach
+        </form>
     </div>
 </div>
 

@@ -8,7 +8,7 @@
     <title>Anime Management alpha</title>
     <link href="http://localhost/project1.0/public/image/hust.png" rel="icon">
     <link href="http://localhost/project1.0/public/bootstrap3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="http://localhost/project1.0/public/css/design.css" rel="stylesheet" type="text/css" >
+    <link href="http://localhost/project1.0/public/css/design3.css" rel="stylesheet" type="text/css" >
 </head>
 
 <body>
@@ -23,8 +23,11 @@
             <nav class="navbar navbar-inverse">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="../home">YOUR ANIMELIST</a>
-                    </div>
+                        @if(session()->exists('uservalue'))
+                            <a class="navbar-brand glow" href="../home">YOUR ANIMELIST</a>
+                        @else
+                            <a class="navbar-brand" href="../home">YOUR ANIMELIST</a>
+                        @endif                    </div>
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="../home"><span class="glyphicon glyphicon-home"></span>&nbsp HOME PAGE</a></li>
                         <li><a href="../home/about">ABOUT US</a></li>
@@ -42,7 +45,7 @@
                         @if(session()->exists('uservalue'))
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Welcome {{session()->get('username')}}&nbsp<span class="caret"></span>
+                                    Welcome <font color="green">{{session()->get('username')}}</font>&nbsp<span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="../home/list"><span class="glyphicon glyphicon-th-list"></span>&nbsp FILM LIST</a></li>
@@ -79,47 +82,85 @@
             </div>
         </div>
 
-        <div class="col-xs-12">
+        <div class="col-xs-6 col-xs-offset-3">
             <div class="panel-body">
                 @include('errors.503')
-
                 <form action="{{url('home/managefilm')}}" method="get" class="form-horizontal">
-                            <div class="form-group">
-                                    <input type="search" name="searchfilm" class="form-control">
-                                    <span class="input-group-prepend">
-                                        <button type="submit" name="managefilmbut" value="searchfilmbut" class="btn btn-primary">Tim kiem</button>
-                                    </span>
+                    <div class="input-group">
+                        <input type="search" name="searchfilm" class="form-control" placeholder="Search film">
+                            <div class="input-group-btn">
+                                <button type="submit" name="managefilmbut" value="searchfilmbut" class="btn btn-success">
+                                    <span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;
+                                    Search
+                                </button>
                             </div>
+                    </div>
                 </form>
-                        <table style="width:100%">
-                            <tr>
-                                <th>Name</th>
-                                <th></th>
-                            </tr>
-                            @if ($films != null)
-                                @if (count($films) > 0)
-                                    @foreach($films as $film)
-                                        <tr>
-                                            <th>{{$film->tenphim}}</th>
-                                            <th>
-                                                <form action="{{url('home/managefilm')}}" method="get" class="form-horizontal">
-                                                    <?php $update = 'update'.$film->msphim; ?>
-                                                    <button type="submit" name="managefilmbut" value="<?php echo $update; ?>" class="btn btn-primary">Update</button>
-                                                </form>
-                                                <br>
-                                                <form method="get" action="{{url('home/managefilm')}}" class="form-horizontal">
-                                                    <?php $delete = 'delete'.$film->msphim; ?>
-                                                    <button type="submit" name="managefilmbut" value="<?php echo $delete;?>" class="btn btn-primary">Delete</button>
-                                                </form>
-                                            </th>
-                                        </tr>
-                                    @endforeach
-                                @else
+            </div>
+        </div>
+
+            <div class="col-xs-12">
+                <br><br>
+                <div class="panel-footer">
+                    <table class="table table-bordered table-dark">
+                        <thead>
+                        <tr class="table-primary">
+                            <th>FilmID</th>
+                            <th>Name</th>
+                            <th>Poster</th>
+                            <th>Info</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        @if ($films != null)
+                            @if (count($films) > 0)
+                                @foreach($films as $film)
                                     <tr>
-                                        <th>There is no film like that!</th>
+                                        <td>{{$film->msphim}}</td>
+                                        <td>{{$film->tenphim}}</td>
+                                        <td><img src="{{$film->poster}}" class="thumbnail height="180px" width="150px"></td>
+                                        <td>
+                                            <ul>
+                                                <li>Rank: #{{$film->xephang}}</li>
+                                                <br>
+                                                <li>Score: {{$film->diem}}</li>
+                                                <br>
+                                                <li>Producer: {{$film->nsx}}</li>
+                                                <br>
+                                                <li>Genres: {{$film->tag}}</li>
+                                                <br>
+                                                <li>Aired Date: {{$film->ngaycongchieu}}</li>
+                                                <br>
+                                                <li>Rating: {{$film->luuy}}</li>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <form action="{{url('home/managefilm')}}" method="get" class="form-horizontal">
+                                                <?php $update = 'update'.$film->msphim; ?>
+                                                <button type="submit" name="managefilmbut" value="<?php echo $update; ?>" class="btn btn-primary">
+                                                    <span class="glyphicon glyphicon-pencil"></span> Update
+                                                </button>
+                                            </form>
+                                            &nbsp;
+                                            <form method="get" action="{{url('home/managefilm')}}" class="form-horizontal">
+                                                <?php $delete = 'delete'.$film->msphim; ?>
+                                                <button type="submit" name="managefilmbut" value="<?php echo $delete;?>" class="btn btn-primary">
+                                                    <span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;Delete
+                                                </button>
+                                            </form>
+                                        </td>
                                     </tr>
-                                @endif
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="5">There is no film like that!</td>
+                                </tr>
                             @endif
+                        @endif
+                        </tbody>
+
                         </table>
                     </form>
             </div>
