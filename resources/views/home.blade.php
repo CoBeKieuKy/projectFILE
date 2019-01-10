@@ -24,7 +24,7 @@
                 <div class="container-fluid">
                     <div class="navbar-header">
                         @if(session()->exists('uservalue'))
-                            <a class="navbar-brand glow" href="../home">YOUR ANIMELIST</a>
+                            <a class="navbar-brand glow" href="home">YOUR ANIMELIST</a>
                         @else
                             <a class="navbar-brand" href="../home">YOUR ANIMELIST</a>
                         @endif                      </div>

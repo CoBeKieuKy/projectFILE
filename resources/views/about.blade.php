@@ -99,7 +99,7 @@
             <div class="panel panel-primary">
                 <img src="http://localhost/project1.0/public/image/quang.jpg" class="img-thumbnail">
                 <div class="panel-heading"><h3 class="panel-title">Team Co-Leader 1 - Tran Ba Quang</h3></div>
-                <div class="panel-body">blank
+                <div class="panel-body">blank : |  ( # He doesn't talk much )
                 </div>
             </div>
         </div>
@@ -108,7 +108,7 @@
             <div class="panel panel-primary">
                 <img src="http://localhost/project1.0/public/image/phuong.jpg" class="img-thumbnail">
                 <div class="panel-heading"><h3 class="panel-title">Team Co-Leader 2 - Doan Duy Phuong</h3></div>
-                <div class="panel-body">blank
+                <div class="panel-body">+) An inspiring chuunibyou game developer, your very harbinger for the end  of this age, GenCo.
                 </div>
             </div>
         </div>

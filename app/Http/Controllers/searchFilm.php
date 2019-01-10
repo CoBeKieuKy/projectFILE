@@ -11,7 +11,8 @@ class searchFilm
     {
         if(($request->searchpagebut) == 'searchbut') {
             $search = strtolower($request->search);
-            $posts = DB::table('phim')->whereRaw('lower(tenphim) like (?)', ["%{$search}%"])->get();
+            $posts = DB::table('phim')->whereRaw('lower(tenphim) like (?)', ["%{$search}%"])
+                ->orWhereRaw('lower(tag) like (?)', ["%{$search}%"])->get();
             return view('searchpage', ['posts' => $posts]);
         }
         if((strpos(($request->searchpagebut),'showmorebut')) !== false) {
